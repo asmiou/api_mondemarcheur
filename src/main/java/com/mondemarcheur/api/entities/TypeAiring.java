@@ -3,7 +3,10 @@ package com.mondemarcheur.api.entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -13,13 +16,11 @@ import java.io.Serializable;
 @Getter
 @ToString
 @Entity
-public class Furniture implements Serializable {
+public class TypeAiring implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
-    int quantity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    TypeFurniture type;
+    String title;
+    String description;
 }
