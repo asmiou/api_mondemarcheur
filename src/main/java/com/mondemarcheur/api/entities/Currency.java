@@ -24,7 +24,7 @@ public class Currency implements Serializable {
     String icon;
     String flag;
 
+    /*
     @OneToMany(mappedBy = "currencyFrom",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true)
-    Set<Rate> rateFrom;
+    Set<Rate> rateFrom;*/
 }

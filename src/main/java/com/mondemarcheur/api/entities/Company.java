@@ -33,8 +33,7 @@ public class Company implements Serializable {
     String zip;
     boolean isProfessional;
 
-    @OneToOne(mappedBy = "company",cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true)
+    @OneToOne(cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.LAZY)
     User owner;
 
     @OneToMany(mappedBy = "company", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

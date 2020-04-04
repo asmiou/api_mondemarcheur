@@ -30,7 +30,7 @@ public class Identity implements Serializable {
     String city;
     String zip;
 
-    @OneToOne(mappedBy = "identity",cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.LAZY)
     User user;
 
 }

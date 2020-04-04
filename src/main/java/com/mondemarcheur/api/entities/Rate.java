@@ -19,14 +19,17 @@ public class Rate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
-    double values;
+
+    double rateValues;
     Date updatedAt;
 
+    /*
     @ManyToOne(optional = false,cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    Currency currencyFrom;
+    @JoinColumn(nullable = true)
+    Currency currencyFrom;*/
 
+    /*
     @ManyToOne(optional = false,cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    Currency currencyTo;
+    @JoinColumn(nullable = true)
+    Currency currencyTo;*/
 }

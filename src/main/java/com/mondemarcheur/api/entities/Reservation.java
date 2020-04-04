@@ -35,10 +35,8 @@ public class Reservation implements Serializable {
     User customer;
 
     @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true)
     Set<Status> status;
 
     @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true)
     Set<Payment> payments;
 }
