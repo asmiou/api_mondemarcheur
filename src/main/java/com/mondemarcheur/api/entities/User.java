@@ -23,9 +23,8 @@ public class User implements Serializable {
     long id;
     String username;
     String email;
-    @JsonIgnore String password;
-    boolean isBlocked;
-    boolean active;
+    String password;
+    boolean isActive;
     Date createdAt;
     Date lastConnect;
 
@@ -43,7 +42,5 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "addedBy",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     Set<Status> actionsDone;
-
-
 
 }

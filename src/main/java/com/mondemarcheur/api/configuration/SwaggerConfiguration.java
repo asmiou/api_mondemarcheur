@@ -3,6 +3,8 @@ package com.mondemarcheur.api.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,6 +14,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+
+import static javax.management.Query.or;
+import static springfox.documentation.builders.RequestHandlerSelectors.withClassAnnotation;
 
 @EnableSwagger2WebMvc
 @Import(SpringDataRestConfiguration.class)
@@ -23,8 +28,9 @@ public class SwaggerConfiguration {
         docket = docket
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.mondemarcheur.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.mondemarcheur.api.entities"))
                 .paths(PathSelectors.any())
+
                 .build();
         return docket;
     }

@@ -1,9 +1,6 @@
 package com.mondemarcheur.api.configuration;
 
-import com.mondemarcheur.api.events.LocalEventHandler;
-import com.mondemarcheur.api.events.PaymentEventHandler;
-import com.mondemarcheur.api.events.PropertyEventHandler;
-import com.mondemarcheur.api.events.ReservationEventHandler;
+import com.mondemarcheur.api.events.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +9,11 @@ public class EventHandlerConfiguration {
 
     public EventHandlerConfiguration(){
         super();
+    }
+
+    @Bean
+    UserEventHandler UserEventHandler(){
+        return new UserEventHandler();
     }
 
     @Bean
