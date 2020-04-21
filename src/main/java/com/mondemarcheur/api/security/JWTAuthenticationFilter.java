@@ -4,6 +4,8 @@ package com.mondemarcheur.api.security;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mondemarcheur.api.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,11 +52,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
+        ObjectMapper objectMapper = new ObjectMapper();
         String token = JWT.create()
-                .withSubject(( (org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername())
+                .withSubject(( (com.mondemarcheur.api.entities.UserDetailsImpl) auth.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .withClaim("roles",auth.getAuthorities().toString())
                 .sign(HMAC512(SECRET.getBytes()));
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        objectMapper.writeValue(res.getWriter(), TOKEN_PREFIX+token );
     }
 }

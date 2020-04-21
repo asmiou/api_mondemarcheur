@@ -1,29 +1,43 @@
 package com.mondemarcheur.api.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mondemarcheur.api.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 import static com.mondemarcheur.api.security.SecurityProperties.SIGN_UP_URL;
 
 @EnableWebSecurity
 public class SpringSecurity extends WebSecurityConfigurerAdapter {
+    private final ObjectMapper objectMapper;
+
     private UserDetailsServiceImpl userDetailsService;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public SpringSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SpringSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, ObjectMapper objectMapper) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.objectMapper = objectMapper;
     }
 
     private final String[] anonymousResources ={
