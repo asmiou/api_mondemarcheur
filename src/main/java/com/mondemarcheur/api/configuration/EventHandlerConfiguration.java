@@ -11,10 +11,11 @@ public class EventHandlerConfiguration {
         super();
     }
 
+    /*
     @Bean
     UserEventHandler UserEventHandler(){
         return new UserEventHandler();
-    }
+    }*/
 
     @Bean
     LocalEventHandler localEventHandler(){

@@ -27,12 +27,10 @@ public class User implements Serializable {
     boolean isActive;
     Date createdAt;
     Date lastConnect;
+    String roles;
 
     @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.LAZY)
     Identity identity;
-
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    Set<Role> roles;
 
     @OneToOne(mappedBy = "owner",cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.LAZY)
     Company company;

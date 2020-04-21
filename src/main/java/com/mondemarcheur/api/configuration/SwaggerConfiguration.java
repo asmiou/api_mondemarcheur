@@ -29,7 +29,7 @@ public class SwaggerConfiguration {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.mondemarcheur.api.entities"))
-                .paths(PathSelectors.any())
+                //.paths(PathSelectors.ant("/api/**"))
 
                 .build();
         return docket;

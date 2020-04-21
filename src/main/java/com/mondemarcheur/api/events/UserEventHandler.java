@@ -16,9 +16,9 @@ public class UserEventHandler {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @HandleBeforeCreate
-    public void HandleUserBeforeCreate(User user){
+    //@HandleBeforeCreate
+    /*public void HandleUserBeforeCreate(User user){
         //logger.info("***Inside Author Before Create....");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
+    }*/
 }

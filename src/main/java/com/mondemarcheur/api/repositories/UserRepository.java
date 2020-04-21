@@ -17,6 +17,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @RestResource(path = "usernameStartsWith", rel = "usernameStartsWith")
     public Page findByUsernameStartsWith(@Param("username") String username, Pageable p);
 
-    @Query("select u from User u where u.isActive = true and (u.email = ?1 or u.username = ?1 )")
-    public Optional<User> loginQuery(String value);
+    @Query(value="select u from User u where u.isActive = true and (u.email = ?1 or u.username = ?1 )")
+    public Optional<User> loginQuery(String username);
+
+    @Query(value="select u from User u where u.isActive = true and (u.email = ?1 or u.username = ?1 )")
+    public User userLoginQuery(String username);
+
+    public User findByUsername(String username);
 }

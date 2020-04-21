@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class UsernamePasswordFilter extends UsernamePasswordAuthenticationFilter {
     public UsernamePasswordFilter() {
@@ -21,26 +22,30 @@ public class UsernamePasswordFilter extends UsernamePasswordAuthenticationFilter
 
     private static final String ERROR_MESSAGE = "Something went wrong while parsing /login request body";
 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         try {
             User userEntity = new ObjectMapper().readValue(request.getInputStream(), User.class);
 
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userEntity.getEmail(), userEntity.getPassword());
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
 
             setDetails(request, token);
 
             return this.getAuthenticationManager().authenticate(token);
+
         } catch(IOException e) {
             throw new InternalAuthenticationServiceException(ERROR_MESSAGE, e);
         }
     }
 
+
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
-                                            HttpServletResponse response, FilterChain filter, Authentication authResult)
-            throws IOException, ServletException {
-        super.successfulAuthentication(request, response,filter, authResult);
+                                            HttpServletResponse response,
+                                            FilterChain filter,
+                                            Authentication auth) throws IOException, ServletException {
+        super.successfulAuthentication(request, response,filter, auth);
     }
 }
