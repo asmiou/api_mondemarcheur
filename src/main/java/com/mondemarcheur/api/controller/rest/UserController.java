@@ -16,9 +16,16 @@ public class UserController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/sign-up")
-    public void register(@RequestBody User user) {
+    @PostMapping("/register")
+    public User register(@RequestBody User user) throws Exception {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        repository.save(user);
+        try{
+            repository.save(user);
+            return user;
+        }catch (Exception ex){
+            throw new Exception("Error:"+ex);
+        }
+
+
     }
 }

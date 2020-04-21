@@ -11,14 +11,14 @@ import java.util.logging.Logger;
 
 @RepositoryEventHandler
 public class UserEventHandler {
-    //Logger logger = Logger.getLogger("***Class AuthorEventHandler");
+    Logger logger = Logger.getLogger("***Class UserEventHandler");
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    //@HandleBeforeCreate
-    /*public void HandleUserBeforeCreate(User user){
-        //logger.info("***Inside Author Before Create....");
+    @HandleBeforeCreate
+    public void HandleUserBeforeCreate(User user){
+        logger.info("***Inside User Before Create....");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }*/
+    }
 }
