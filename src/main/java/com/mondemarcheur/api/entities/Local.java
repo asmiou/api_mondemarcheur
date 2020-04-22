@@ -4,22 +4,29 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
 @Entity
 public class Local implements Serializable {
+    public Local(){
+        this.quantity=1;
+        this.isAvailable = false;
+        this.createdAt = new Date();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
+
     String reference;
     /**
      * Appartemnt
@@ -42,6 +49,7 @@ public class Local implements Serializable {
      * Salle: Mariage, conference, concert, bureau, ...
      */
     //String type;
+
     String num;
 
     /**
@@ -52,7 +60,11 @@ public class Local implements Serializable {
     //String airing;
 
     String floor;
+
+    @Column(length = 500)
     String description;
+
+    @DecimalMin(value = "10.0", message = "Min value of price should be greater than 10.0")
     double price;
 
     /**
@@ -63,9 +75,14 @@ public class Local implements Serializable {
     //String cadencePayment;
 
     int quantity;
+
+    @DecimalMin(value = "10.0", message = "Min value of surface should be greater than 10.0")
     double surface;
+
     boolean isAvailable;
+
     Date createdAt;
+
     Date updatesAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

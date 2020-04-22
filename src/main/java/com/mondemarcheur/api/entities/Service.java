@@ -10,18 +10,21 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
 @Entity
 public class Service implements Serializable {
-
+    public Service(){
+        this.isFree = false;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
     String title;
+
     String faIcon;
-    boolean idFree;
+    boolean isFree;
 }

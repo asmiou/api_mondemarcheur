@@ -3,10 +3,10 @@ package com.mondemarcheur.api.entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -21,7 +21,13 @@ public class TypeStatus implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
+    @Column(unique = true)
+    @NotBlank(message = "Title cannot be null")
+    @NotNull(message = "Title cannot be null")
+    @Size(min = 3, max = 255, message = "The name should be between 3 and 255 characters")
     String title;
+
     String labelColor;
     String faIcon;
     int step;
