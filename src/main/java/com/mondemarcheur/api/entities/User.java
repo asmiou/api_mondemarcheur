@@ -3,7 +3,6 @@ package com.mondemarcheur.api.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -40,9 +39,16 @@ public class User implements Serializable {
     @Email(message = "Email should be valid")
     String email;
 
+    //@Pattern(regexp = "^(?=.*\\d)(?=.*[@#\\-_$%^&+=§!\\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\\-_$%^&+=§!\\?]{8,32}$",
+    /*@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=\\S+$).{8,32}$",
+    message = "The password must contain at least 8 characters" +
+            "at least one lowercase char\n" +
+            "at least one uppercase char\n" +
+            "at least one digit\n" +
+            "at least one special sign of @#-_$%^&+=§!?")*/
     @NotBlank(message = "Password cannot be null")
-    @Size(min=6, max = 255, message = "Le mot de passe doit avoir au moins 6 caractère")
-    @Column(length = 255, nullable = false)
+    @Size(min=8, max = 32, message = "Le mot de passe doit avoir au moins 8 caractères max 32")
+    @Column(nullable = false)
     @JsonIgnore
     String password;
 

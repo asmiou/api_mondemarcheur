@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    //@Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.passwordEncoder = bCryptPasswordEncoder;
+    }
 
     @PostMapping("/register")
     public User register(@RequestBody User user) throws Exception {
@@ -25,7 +29,6 @@ public class UserController {
         }catch (Exception ex){
             throw new Exception("Error:"+ex);
         }
-
 
     }
 }
