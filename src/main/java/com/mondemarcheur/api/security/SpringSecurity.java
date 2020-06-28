@@ -1,5 +1,6 @@
 package com.mondemarcheur.api.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mondemarcheur.api.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -17,13 +18,16 @@ import static com.mondemarcheur.api.security.SecurityProperties.SIGN_UP_URL;
 
 @EnableWebSecurity
 public class SpringSecurity extends WebSecurityConfigurerAdapter {
-    private UserDetailsServiceImpl userDetailsService;
+    private final ObjectMapper objectMapper;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public SpringSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public SpringSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, ObjectMapper objectMapper) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.objectMapper = objectMapper;
     }
 
     private final String[] anonymousResources ={
@@ -35,16 +39,17 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
             "/favicon.ico",
             "**/*.html",
             "**/*.css",
-            "**/*.js",
-            "/login/**"
+            "**/*.js"
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(anonymousResources).permitAll()
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
+                .antMatchers().permitAll()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))

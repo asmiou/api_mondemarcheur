@@ -9,13 +9,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
 @Entity
 public class Media implements Serializable {
+    public Media(){
+        this.createdAt = new Date();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +35,4 @@ public class Media implements Serializable {
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     Local local;
-
-    //File file;
 }

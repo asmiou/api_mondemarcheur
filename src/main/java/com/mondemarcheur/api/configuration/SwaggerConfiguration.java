@@ -3,36 +3,66 @@ package com.mondemarcheur.api.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+import springfox.documentation.service.AuthorizationScope;
 
-import static javax.management.Query.or;
-import static springfox.documentation.builders.RequestHandlerSelectors.withClassAnnotation;
+import java.awt.print.Pageable;
+import java.util.Date;
+import java.util.List;
 
 @EnableSwagger2WebMvc
 @Import(SpringDataRestConfiguration.class)
 @Configuration
 public class SwaggerConfiguration {
-    @Bean
+
+    private static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+
+    /*@Bean
     public Docket api() {
         Docket docket = new Docket(DocumentationType.SWAGGER_2);
         docket = docket
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.mondemarcheur.api.entities"))
-                //.paths(PathSelectors.ant("/api/**"))
+                //.apis(RequestHandlerSelectors.basePackage("com.mondemarcheur.api.entities"))
+                .paths(PathSelectors.ant("/**"))
 
                 .build();
         return docket;
+    }*/
+    @Bean
+    public Docket swaggerSpringfoxDocket() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                //.pathMapping("/ui")
+                .forCodeGeneration(true)
+                .genericModelSubstitutes(ResponseEntity.class)
+                .ignoredParameterTypes(Pageable.class)
+                .ignoredParameterTypes(java.sql.Date.class)
+                .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
+                .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
+                .directModelSubstitute(java.time.LocalDateTime.class, Date.class)
+                //.securityContexts(Lists.newArrayList(securityContext()))
+                //.securitySchemes(Lists.newArrayList(apiKey()))
+                .useDefaultResponseMessages(false);
+
+        docket = docket.select()
+                .paths(PathSelectors.regex(DEFAULT_INCLUDE_PATTERN))
+                //.apis(RequestHandlerSelectors.basePackage("com.mondemarcheur.api.entities"))
+                .build();
+        return  docket;
     }
 
     private ApiInfo apiInfo() {
@@ -46,4 +76,5 @@ public class SwaggerConfiguration {
                 .version("1.0.0")
                 .build();
     }
+
 }

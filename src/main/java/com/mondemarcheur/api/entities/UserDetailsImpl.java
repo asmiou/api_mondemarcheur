@@ -27,14 +27,6 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        /*Collection<GrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(r->{
-            this.authorities.add(new SimpleGrantedAuthority(r.getLabel()));
-        });*/
-    }
-
-    public UserDetailsImpl(){
-
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
@@ -16,10 +15,17 @@ import java.util.Date;
 @Entity
 public class Status implements Serializable {
 
+    public Status(){
+        this.addedAt = new Date();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
     Date addedAt;
+
+    @Column(length = 500)
     String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)

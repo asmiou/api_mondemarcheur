@@ -21,6 +21,7 @@ public class Rate implements Serializable {
     long id;
 
     double rateValues;
+
     Date updatedAt;
 
     /*
