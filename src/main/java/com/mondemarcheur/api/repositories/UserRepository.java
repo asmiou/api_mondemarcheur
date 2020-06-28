@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+@Repository()
 public interface UserRepository extends CrudRepository<User, Long> {
 
     @RestResource(path = "usernameStartsWith", rel = "usernameStartsWith")

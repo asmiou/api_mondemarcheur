@@ -56,5 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("roles",auth.getAuthorities().toString())
                 .sign(HMAC512(SECRET.getBytes()));
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(res.getWriter(), token );
     }
 }
