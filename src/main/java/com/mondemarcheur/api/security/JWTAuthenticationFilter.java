@@ -58,5 +58,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(res.getWriter(), token );
+
     }
 }
